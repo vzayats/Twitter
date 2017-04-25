@@ -209,7 +209,6 @@ UpgradeLog*.XML
 UpgradeLog*.htm
 
 # SQL Server files
-*.mdf
 *.ldf
 
 # Business Intelligence projects
@@ -250,3 +249,14 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Exclude bower_components
+bower_components/
+
+# Exclude bundles
+**/Bundles/styles.css
+**/Bundles/styles.min.css
+**/Bundles/libs.js
+**/Bundles/libs.min.js
+**/Bundles/main.js
+**/Bundles/main.min.js
