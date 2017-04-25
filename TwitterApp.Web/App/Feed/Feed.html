@@ -1,0 +1,34 @@
+﻿<br/>
+<div class="row">
+    <div class="col-md-5 col-md-offset-5" ng-repeat="user in feedCtrl.users">
+        <h2>Your feed, <a href="" ng-click="feedCtrl.userPage()">@{{user.UserName}}</a>!
+        </h2>
+    </div>
+</div>
+<div class="container" ng-repeat="tweet in feedCtrl.tweets | orderBy: '-DateCreated' | limitTo: feedCtrl.limitTweets">
+    <ul class="timeline">
+        <li>
+            <div class="timeline-badge info">
+                <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
+            </div>
+            <div class="timeline-panel">
+                <div class="timeline-heading">
+                    <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{tweet.UserId}}</h4>
+                    <p title="Message time">
+                        <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
+                    </p>
+                </div>
+                <div class="timeline-body">
+                    <p>{{tweet.Tweet}}</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="row" ng-show="feedCtrl.tweets.length > 20">
+    <div class="col-md-12 col-md-offset-5">
+        <a title="Load more messages" ng-click="feedCtrl.showMoreTweets()" aria-label="Settings">
+            <i class="fa fa-refresh fa-3x fa-spin-hover"></i>
+        </a>
+    </div>
+</div>

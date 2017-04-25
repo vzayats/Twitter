@@ -1,0 +1,47 @@
+﻿<br/>
+<div class="row">
+    <div class="col-md-12 col-md-offset-4">
+        <div class="input-group">
+            <form id="form-container">
+                <div id="searchtext">
+                    <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search user..." ng-model="subscriptionsCtrl.searchText">
+                    <a id="clear_input" ng-show="subscriptionsCtrl.searchText.length > 0" ng-click="subscriptionsCtrl.cancelSearch()">
+                        <i class="fa fa-times"></i>
+                    </a>
+                    <button class="search-submit-button" type="submit" ng-click="subscriptionsCtrl.search()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 20px" ng-repeat="user in subscriptionsCtrl.users | orderBy: '-CreatedAt' | limitTo: subscriptionsCtrl.limitUsers | filterBy: ['Name', 'Surname', 'UserName']: subscriptionsCtrl.usersFilter ">
+    <div class="row panel" style="background-color: #fcfafa;">
+        <div class="col-md-4 bg_blur ">
+            <button class="follow_btn hidden-xs" ng-click="subscriptionsCtrl.unfollowUser(user.UserId, user.UserName)" title="Unfollow from user">Unfollow</button>
+        </div>
+        <div class="col-md-8  col-xs-12">
+            <img src="/Content/Icons/user.jpg" class="img-thumbnail picture hidden-xs" title="{{user.Name}} {{user.Surname}}"/>
+            <div class="header">
+                <h1>{{user.Name}} {{user.Surname}}</h1>
+                <h4>@{{user.UserName}}</h4>
+                <span>
+                    {{user.Description}}
+                </span>
+                <h5 title="Location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{user.City}}</h5>
+                <h5 title="Web site">
+                    <i class="fa fa-link" aria-hidden="true" title="Web Site"></i><a target="_blank" href="http://{{user.WebSite}}"> {{user.WebSite}}</a>
+                </h5>
+                <h5 title="{{user.CreatedAt | date:'dd-MM-yyyy HH:mm'}}"><i class="fa fa-calendar-o" aria-hidden="true"></i> Joined: {{user.CreatedAt | date:'dd-MM-yyyy'}}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" ng-show="subscriptionsCtrl.users.length > 20">
+    <div class="col-md-12 col-md-offset-5">
+        <a title="Load more users" ng-click="subscriptionsCtrl.showMoreUsers()" aria-label="Settings">
+            <i class="fa fa-refresh fa-3x fa-spin-hover"></i>
+        </a>
+    </div>
+</div>
