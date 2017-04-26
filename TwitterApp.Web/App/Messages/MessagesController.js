@@ -13,8 +13,10 @@
         vm.createTweet = createTweet;
         vm.removeTweet = removeTweet;
         vm.showMoreTweets = showMoreTweets;
+        vm.getCurrentUser = getCurrentUser;
 
         vm.tweets = {};
+        vm.users = {};
         vm.limitTweets = 20;
 
         $window.document.title = "Twitter - Messages";
@@ -22,6 +24,7 @@
         activate();
 
         function activate() {
+            getCurrentUser();
             getMessages();
         }
 
@@ -75,6 +78,13 @@
                         type: "success"
                     });
                 });
+        }
+
+        //Load current user
+        function getCurrentUser() {
+            messagesService.getUsersContent(function(data) {
+                vm.users = data;
+            });
         }
 
         //load more messages

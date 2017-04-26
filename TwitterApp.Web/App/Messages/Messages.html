@@ -1,41 +1,72 @@
-﻿<br/>
-<div class="row">
-    <div class="col-md-12 col-md-offset-3">
-        <form name="createForm" ng-submit="submitForm()" class="form-inline" novalidate>
-            <div class="form-group" ng-class="{ 'has-error' : createForm.tweet.$invalid && !createForm.tweet.$pristine }">
-                <label>Create message:</label>
-                <input type="text" name="tweet" class="form-control input-lg col-md-12-offset" placeholder="Tweet" ng-model="Tweet" ng-minlength="1" ng-maxlength="140" required>
-                <p ng-show="createForm.tweet.$error.required && createForm.tweet.$touched" class="help-block col-sm-offset-4">Message can not be empty!</p>
-                <p ng-show="createForm.tweet.$error.maxlength && createForm.tweet.$touched" class="help-block col-sm-offset-4">Message length must be less than 140 characters!</p>
+﻿<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="container" ng-repeat="user in messagesCtrl.users">
+                <div class="col-md-8  col-xs-12" style="margin-left: 10%">
+                    <img src="/Content/Icons/user.jpg" class="img-thumbnail picture hidden-xs" title="{{user.Name}} {{user.Surname}}"/>
+                    <div class="header">
+                        <h1>{{user.Name}} {{user.Surname}}</h1>
+                        <h4>@{{user.UserName}}</h4>
+                        <span>
+                                {{user.Description}}
+                            </span>
+                        <h5 title="Location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{user.City}}</h5>
+                        <h5 title="Web site">
+                            <i class="fa fa-link" aria-hidden="true" title="Web Site"></i><a target="_blank" href="http://{{user.WebSite}}"> {{user.WebSite}}</a>
+                        </h5>
+                        <h5 title="{{user.CreatedAt | date:'dd-MM-yyyy HH:mm'}}"><i class="fa fa-calendar-o" aria-hidden="true"></i> Joined: {{user.CreatedAt | date:'dd-MM-yyyy'}}</h5>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-primary" type="button" ng-click="messagesCtrl.createTweet()"
-                    ng-disabled="createForm.$invalid">
-                <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Tweet
-            </button>
-        </form>
+        </div>
+        <div class="col-sm-7">
+            <div class="col-md-12" style="margin-top: 16%; margin-left: 12%">
+                <form name="createForm" ng-submit="submitForm()" class="form-inline" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : createForm.tweet.$invalid && !createForm.tweet.$pristine }">
+                        <label>Create message:</label>
+                        <input type="text" name="tweet" class="form-control input-lg col-md-12-offset" placeholder="Tweet" ng-model="Tweet" ng-minlength="1" ng-maxlength="140" required>
+                        <p ng-show="createForm.tweet.$error.required && createForm.tweet.$touched" class="help-block col-sm-offset-4">Message can not be empty!</p>
+                        <p ng-show="createForm.tweet.$error.maxlength && createForm.tweet.$touched" class="help-block col-sm-offset-4">Message length must be less than 140 characters!</p>
+                    </div>
+                    <button class="btn btn-primary" type="button" ng-click="messagesCtrl.createTweet()"
+                            ng-disabled="createForm.$invalid">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Tweet
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="text-align: center">
+    <div ng-repeat="user in messagesCtrl.users">
+        <h3>
+            Your messages, @{{user.UserName}}:
+        </h3>
     </div>
 </div>
 <div class="container" ng-repeat="tweet in messagesCtrl.tweets | orderBy: '-DateCreated' | limitTo: messagesCtrl.limitTweets">
-    <ul class="timeline">
-        <li>
-            <div class="timeline-badge info">
-                <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-            </div>
-            <div class="timeline-panel">
-                <div class="timeline-heading">
-                    <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{tweet.UserId}}</h4>
-                    <p title="Message time">
-                        <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
-                    </p>
+    <div ng-repeat="user in messagesCtrl.users">
+        <ul class="timeline">
+            <li>
+                <div class="timeline-badge info">
+                    <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
                 </div>
-                <div class="timeline-body">
-                    <p>{{tweet.Tweet}}</p>
-                    <hr style="margin-top: 5px; margin-bottom: 7px;">
-                    <button type="button" class="btn btn-danger" title="Delete message" ng-click="messagesCtrl.removeTweet(tweet.Id);"><i class="fa fa-trash-o fa-lg"></i> Delete</button>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{user.Name}} {{user.Surname}} @{{user.UserName}}</h4>
+                        <p title="Message time">
+                            <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
+                        </p>
+                    </div>
+                    <div class="timeline-body">
+                        <p>{{tweet.Tweet}}</p>
+                        <hr style="margin-top: 5px; margin-bottom: 7px;">
+                        <button type="button" class="btn btn-danger" title="Delete message" ng-click="messagesCtrl.removeTweet(tweet.Id);"><i class="fa fa-trash-o fa-lg"></i> Delete</button>
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
 </div>
 <div class="row" ng-show="messagesCtrl.tweets.length > 20">
     <div class="col-md-12 col-md-offset-5">

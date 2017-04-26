@@ -1,7 +1,8 @@
 ﻿<br/>
-<div class="row">
-    <div class="col-md-5 col-md-offset-5" ng-repeat="user in feedCtrl.users">
-        <h2>Your feed, <a href="" ng-click="feedCtrl.userPage()">@{{user.UserName}}</a>!
+<div class="row" style="text-align: center">
+    <div ng-repeat="user in feedCtrl.users">
+        <h2>
+            Your feed, <a href="" ng-click="feedCtrl.userPage()">@{{user.UserName}}</a>:
         </h2>
     </div>
 </div>

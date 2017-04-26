@@ -38,11 +38,11 @@ namespace TwitterApp.Web.Api
         [System.Web.Http.HttpGet]
         public IQueryable<User> GetSubscribtionsUsers()
         {
-            return db.Users
-                .Where(c => db.Subscriptions
-                        .Select(b => b.UserId)
-                        .Contains(_fakeUserId)
-                );
+            return db.Users.Join(
+                db.Subscriptions,
+                p => p.UserId,
+                c => c.SubscribeUserId,
+                (p, c) => p).Where(c => c.UserId != _fakeUserId).Distinct();
         }
 
         // GET: api/Subscribe/5

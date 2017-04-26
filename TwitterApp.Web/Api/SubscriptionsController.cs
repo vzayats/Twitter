@@ -104,12 +104,6 @@ namespace TwitterApp.Web.Api
         [System.Web.Http.HttpDelete]
         public async Task<IHttpActionResult> DeleteSubscription(int id)
         {
-            Subscription subscription = await db.Subscriptions.FindAsync(id);
-            if (subscription == null)
-            {
-                return NotFound();
-            }
-
             var delete = (from d in db.Subscriptions
                 where d.UserId == _fakeUserId && d.SubscribeUserId == id
                 select d).Single();
@@ -117,7 +111,7 @@ namespace TwitterApp.Web.Api
             db.Subscriptions.Remove(delete);
             await db.SaveChangesAsync();
 
-            return Ok(subscription);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)

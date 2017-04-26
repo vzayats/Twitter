@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -30,14 +31,13 @@ namespace TwitterApp.Web.Api
 
         // GET: api/Messages
         [System.Web.Http.HttpGet]
-        public IQueryable<Message> GetFollowMessages()
+        public IEnumerable<Message> GetFollowMessages()
         {
-            return db.Messages
-                .Where(c => db.Subscriptions
-                        .Select(b => b.UserId)
-                        .Contains(_fakeUserId)
-                )
-                .Where(c => c.UserId != _fakeUserId);
+            return db.Messages.Distinct().Join(
+                db.Subscriptions,
+                p => p.UserId,
+                c => c.SubscribeUserId,
+                (p, c) => p).Where(c => c.UserId != _fakeUserId).Distinct();
         }
 
         // GET: api/Messages/5
@@ -54,7 +54,7 @@ namespace TwitterApp.Web.Api
             return Ok(message);
         }
 
-        
+
         // PUT: api/Messages/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutMessage(int id, Message message)
@@ -96,7 +96,6 @@ namespace TwitterApp.Web.Api
         {
             if (!ModelState.IsValid)
             {
-                
                 return BadRequest(ModelState);
             }
 
@@ -107,10 +106,10 @@ namespace TwitterApp.Web.Api
                 DateCreated = DateTime.Now
             };
             db.Messages.Add(mes);
-             
+
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = message.Id }, message);
+            return CreatedAtRoute("DefaultApi", new {id = message.Id}, message);
         }
 
         // DELETE: api/Messages/5

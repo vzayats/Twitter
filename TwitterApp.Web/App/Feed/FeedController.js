@@ -49,7 +49,7 @@
 
         //Open user page
         function userPage() {
-            $window.location.href = '/';
+            $window.location.href = "/";
         };
 
         //load more messages when user scrolls down the page (dynamic loading)
