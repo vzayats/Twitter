@@ -17,7 +17,7 @@
     </div>
 </div>
 <div class="container" style="margin-top: 20px" ng-repeat="user in subscriptionsCtrl.users | orderBy: '-CreatedAt' | limitTo: subscriptionsCtrl.limitUsers | filterBy: ['Name', 'Surname', 'UserName']: subscriptionsCtrl.usersFilter ">
-    <div class="row panel" style="background-color: #fcfafa;">
+    <div class="row panel cards" style="background-color: #fcfafa;">
         <div class="col-md-4 bg_blur ">
             <button class="follow_btn hidden-xs" ng-click="subscriptionsCtrl.unfollowUser(user.UserId, user.UserName)" title="Unfollow from user">Unfollow</button>
         </div>

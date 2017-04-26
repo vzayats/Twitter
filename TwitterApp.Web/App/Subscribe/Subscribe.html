@@ -17,7 +17,7 @@
     </div>
 </div>
 <div class="container" style="margin-top: 20px" ng-repeat="user in subscribeCtrl.users | orderBy: '-CreatedAt' | limitTo: subscribeCtrl.limitUsers | filterBy: ['Name', 'Surname', 'UserName']: subscribeCtrl.usersFilter ">
-    <div class="row panel" style="background-color: #fcfafa;">
+    <div class="row panel cards" style="background-color: #fcfafa;">
         <div class="col-md-4 bg_blur ">
             <button class="follow_btn hidden-xs" ng-click="subscribeCtrl.followUser(user.UserId, user.UserName)" title="Follow user">Follow</button>
         </div>
