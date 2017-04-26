@@ -6,6 +6,11 @@
         </h2>
     </div>
 </div>
+<div ng-show="feedCtrl.tweets.length == 0">
+    <br/>
+    <h2 class="text-muted text-center">Your feed is empty. Try to <a href="" ng-click="feedCtrl.openSubscribe()">subscribe to someone</a>.
+    </h2>
+</div>
 <div class="container" ng-repeat="tweet in feedCtrl.tweets | orderBy: '-DateCreated' | limitTo: feedCtrl.limitTweets">
     <ul class="timeline">
         <li>

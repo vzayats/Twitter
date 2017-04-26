@@ -4,9 +4,9 @@
     angular.module("myApp")
         .controller("SubscriptionsController", SubscriptionsController);
 
-    SubscriptionsController.$inject = ["SubscriptionsService", "$scope", "$http", "toastr", "$window"];
+    SubscriptionsController.$inject = ["SubscriptionsService", "$scope", "$http", "toastr", "$window", "$location"];
 
-    function SubscriptionsController(subscriptionsService, $scope, $http, toastr, $window) {
+    function SubscriptionsController(subscriptionsService, $scope, $http, toastr, $window, $location) {
         var vm = this;
 
         vm.getUsers = getUsers;
@@ -14,6 +14,8 @@
         vm.showMoreUsers = showMoreUsers;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
+        vm.cancelSearch = openSubscribe;
+        vm.openSubscribe = openSubscribe;
 
         vm.users = {};
 
@@ -74,6 +76,11 @@
             vm.limitUsers += 10;
             getUsers();
         }
+
+        //Open subscribe page
+        function openSubscribe() {
+            $location.url("/Subscribe");
+        };
 
         //load more users when user scrolls down the page (dynamic loading)
         window.onscroll = function() {

@@ -44,6 +44,10 @@
         </h3>
     </div>
 </div>
+<div ng-show="messagesCtrl.tweets.length == 0">
+    <br/>
+    <h2 class="text-muted text-center">You have no messages. Compose new message.</h2>
+</div>
 <div class="container" ng-repeat="tweet in messagesCtrl.tweets | orderBy: '-DateCreated' | limitTo: messagesCtrl.limitTweets">
     <div ng-repeat="user in messagesCtrl.users">
         <ul class="timeline">
