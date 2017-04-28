@@ -31,9 +31,10 @@
 
         //Load users
         function getUsers() {
-            subscribeService.getUsersContent(function(data) {
-                vm.users = data;
-            });
+            subscribeService.getUsersContent()
+                .then(function(data) {
+                    vm.users = data;
+                });
         }
 
         //Follow user
@@ -41,8 +42,8 @@
             var userData = {
                 SubscribeUserId: userId
             };
-            subscribeService.subscribeUser(userData,
-                function() {
+            subscribeService.subscribeUser(userData)
+                .then(function() {
                     toastr.success(
                         "You subscribed to @" + userName + "!",
                         "Subscribed",
@@ -50,7 +51,6 @@
                             closeButton: true,
                             timeOut: 5000
                         });
-
                 });
         }
 

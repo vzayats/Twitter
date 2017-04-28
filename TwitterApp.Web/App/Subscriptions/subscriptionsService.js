@@ -14,12 +14,10 @@
         };
 
         //Get users
-        function getUsersContent(callBack) {
-            $http.get("/api/Subscribe/GetSubscribtionsUsers")
+        function getUsersContent() {
+            return $http.get("/api/Subscribe/GetSubscribtionsUsers")
                 .then(function(response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+                    return response.data;
                 })
                 .catch(function(error) {
                     if (error.status === 401) {
@@ -29,12 +27,10 @@
         };
 
         //Unsubscribe from user
-        function unsubscribeUser(id, callBack) {
-            $http.delete("/api/Subscriptions/DeleteSubscription/" + id)
+        function unsubscribeUser(id) {
+            return $http.delete("/api/Subscriptions/DeleteSubscription/" + id)
                 .then(function(response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+                    return response.data;
                 })
                 .catch(function(error) {
                     if (error.status === 401) {

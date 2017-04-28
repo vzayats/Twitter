@@ -14,12 +14,10 @@
         };
 
         //Get users
-        function getUsersContent(callBack) {
-            $http.get("/api/Subscribe/GetUsers")
+        function getUsersContent() {
+            return $http.get("/api/Subscribe/GetUsers")
                 .then(function(response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+                    return response.data;
                 })
                 .catch(function(error) {
                     if (error.status === 401) {
@@ -29,14 +27,12 @@
         };
 
         //Subscribe user
-        function subscribeUser(userData, callBack) {
-            $http.post("/api/Subscriptions/PostSubscription", userData)
-                .then(function (response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+        function subscribeUser(userData) {
+            return $http.post("/api/Subscriptions/PostSubscription", userData)
+                .then(function(response) {
+                    return response.data;
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     if (error.status === 401) {
                         $window.location.href = "/Account/Login?returnurl=/";
                     }

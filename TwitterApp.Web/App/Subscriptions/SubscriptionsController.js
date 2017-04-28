@@ -33,15 +33,17 @@
 
         //Load users
         function getUsers() {
-            subscriptionsService.getUsersContent(function(data) {
-                vm.users = data;
-            });
+            subscriptionsService.getUsersContent()
+                .then(function(data) {
+                    vm.users = data;
+                });
         }
 
         //Unfollow from user
         function unfollowUser(userId, userName) {
-            subscriptionsService.unsubscribeUser(userId,
-                function() {
+            subscriptionsService.unsubscribeUser(userId)
+                .then(function() {
+                    getUsers();
                     toastr.success(
                         "You unsubscribed from @" + userName + "!",
                         "Unsubscribed",
@@ -49,7 +51,6 @@
                             closeButton: true,
                             timeOut: 5000
                         });
-                    getUsers();
                 });
         }
 

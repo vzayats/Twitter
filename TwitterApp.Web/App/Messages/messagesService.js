@@ -17,12 +17,10 @@
         };
 
         //Get messages
-        function getMessagesContent(callBack) {
-            $http.get("/api/Messages/")
+        function getMessagesContent() {
+            return $http.get("/api/Messages/")
                 .then(function(response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+                    return response.data;
                 })
                 .catch(function(error) {
                     if (error.status === 401) {
@@ -32,12 +30,10 @@
         };
 
         //Delete message
-        function deleteMessagePermanently(id, callBack) {
-            $http.delete("/api/Messages/DeleteMessage/" + id)
+        function deleteMessagePermanently(id) {
+            return $http.delete("/api/Messages/DeleteMessage/" + id)
                 .then(function(response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+                    return response.data;
                 })
                 .catch(function(error) {
                     if (error.status === 401) {
@@ -47,12 +43,10 @@
         };
 
         //Create message
-        function createTweet(messageData, callBack) {
-            $http.post("/api/Messages/PostMessage", messageData)
+        function createTweet(messageData) {
+            return $http.post("/api/Messages/PostMessage", messageData)
                 .then(function(response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+                    return response.data;
                 })
                 .catch(function(error) {
                     if (error.status === 401) {
@@ -62,12 +56,10 @@
         };
 
         //Get current user
-        function getUsersContent(callBack) {
-            $http.get("/api/Subscribe/GetSubscribeUsers")
+        function getUsersContent() {
+            return $http.get("/api/Subscribe/GetSubscribeUsers")
                 .then(function(response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
+                    return response.data;
                 })
                 .catch(function(error) {
                     if (error.status === 401) {

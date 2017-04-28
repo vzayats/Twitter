@@ -30,9 +30,10 @@
 
         //Load messages
         function getMessages() {
-            messagesService.getMessagesContent(function(data) {
-                vm.tweets = data;
-            });
+            messagesService.getMessagesContent()
+                .then(function(data) {
+                    vm.tweets = data;
+                });
         }
 
         //Create tweet
@@ -40,8 +41,9 @@
             var messageData = {
                 Tweet: $scope.Tweet
             };
-            messagesService.createTweet(messageData,
-                function() {
+            messagesService.createTweet(messageData)
+                .then(function() {
+                    getMessages();
                     toastr.success(
                         "Message was successfully posted!",
                         "Posted",
@@ -50,7 +52,6 @@
                             timeOut: 5000
                         });
                     $scope.Tweet = null;
-                    getMessages();
                 });
         }
 
@@ -66,25 +67,26 @@
                     closeOnConfirm: false
                 },
                 function() {
-                    messagesService.deleteMessagePermanently(id,
-                        function() {
+                    messagesService.deleteMessagePermanently(id)
+                        .then(function() {
                             getMessages();
+                            swal({
+                                title: "Deleted!",
+                                text: "Message deleted successfully",
+                                timer: 2000,
+                                showConfirmButton: false,
+                                type: "success"
+                            });
                         });
-                    swal({
-                        title: "Deleted!",
-                        text: "Message deleted successfully",
-                        timer: 2000,
-                        showConfirmButton: false,
-                        type: "success"
-                    });
                 });
         }
 
         //Load current user
         function getCurrentUser() {
-            messagesService.getUsersContent(function(data) {
-                vm.users = data;
-            });
+            messagesService.getUsersContent()
+                .then(function(data) {
+                    vm.users = data;
+                });
         }
 
         //load more messages

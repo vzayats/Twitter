@@ -10,8 +10,8 @@
         var vm = this;
 
         vm.getMessages = getMessages;
-        vm.showMoreTweets = showMoreTweets;
         vm.getUsers = getUsers;
+        vm.showMoreTweets = showMoreTweets;
         vm.userPage = userPage;
         vm.openSubscribe = openSubscribe;
 
@@ -30,22 +30,24 @@
 
         //Load messages
         function getMessages() {
-            feedService.getMessagesContent(function(data) {
-                vm.tweets = data;
-            });
+            feedService.getMessagesContent()
+                .then(function(data) {
+                    vm.tweets = data;
+                });
+        }
+
+        //Load user
+        function getUsers() {
+            feedService.getUsersContent()
+                .then(function(data) {
+                    vm.users = data;
+                });
         }
 
         //load more messages
         function showMoreTweets() {
             vm.limitTweets += 10;
             getMessages();
-        }
-
-        //Load user
-        function getUsers() {
-            feedService.getUsersContent(function(data) {
-                vm.users = data;
-            });
         }
 
         //Open user page
