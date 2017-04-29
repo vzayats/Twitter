@@ -5,9 +5,9 @@
         .module("myApp")
         .factory("MessagesService", MessagesService);
 
-    MessagesService.$inject = ["$http", "$window"];
+    MessagesService.$inject = ["$http"];
 
-    function MessagesService($http, $window) {
+    function MessagesService($http) {
 
         var service = {
             getMessagesContent: getMessagesContent,
@@ -22,10 +22,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error while retrieving messages!");
                 });
         };
 
@@ -35,10 +33,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error when deleting message!");
                 });
         };
 
@@ -48,10 +44,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error while creating message!");
                 });
         };
 
@@ -61,10 +55,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error while retrieving current user!");
                 });
         };
 

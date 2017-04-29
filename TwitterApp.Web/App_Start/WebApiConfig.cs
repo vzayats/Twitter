@@ -19,6 +19,8 @@ namespace TwitterApp.Web
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new {controller = "messages", action = "GetMessages", id = RouteParameter.Optional}
             );
+
+            config.Filters.Add(new AuthorizeAttribute());
         }
     }
 }

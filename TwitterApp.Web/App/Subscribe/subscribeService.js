@@ -5,9 +5,9 @@
         .module("myApp")
         .factory("SubscribeService", SubscribeService);
 
-    SubscribeService.$inject = ["$http", "$window"];
+    SubscribeService.$inject = ["$http"];
 
-    function SubscribeService($http, $window) {
+    function SubscribeService($http) {
         var service = {
             getUsersContent: getUsersContent,
             subscribeUser: subscribeUser
@@ -19,10 +19,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error while retrieving users!");
                 });
         };
 
@@ -32,10 +30,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error when subscribing user!");
                 });
         };
 

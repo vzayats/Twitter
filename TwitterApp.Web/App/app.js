@@ -1,5 +1,5 @@
 ﻿angular.module("myApp",
-        ["ngRoute", "toastr", "angular.filter"])
+        ["ngRoute", "toastr", "angular.filter", "angular-loading-bar", "ngAnimate"])
     .config([
         "$routeProvider",
         function($routeProvider) {

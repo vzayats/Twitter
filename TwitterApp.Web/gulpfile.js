@@ -67,7 +67,9 @@ gulp.task("libs",
                 paths.bower + "bootstrap.js",
                 paths.bower + "sweetalert.min.js",
                 paths.bower + "angular-toastr.tpls.js",
-                paths.bower + "angular-filter.js"
+                paths.bower + "angular-filter.js",
+                paths.bower + "angular-animate.js",
+                paths.bower + "loading-bar.min.js"
             ])
             .pipe(concat("libs.js"))
             .pipe(gulp.dest(paths.scriptBundles));
@@ -81,6 +83,7 @@ gulp.task("styles",
                 paths.bower + "font-awesome-animation.css",
                 paths.bower + "sweetalert.css",
                 paths.bower + "angular-toastr.css",
+                paths.bower + "loading-bar.min.css",
                 "./Content/*.css"
             ])
             .pipe(concat("styles.css"))

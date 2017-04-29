@@ -5,9 +5,9 @@
         .module("myApp")
         .factory("FeedService", FeedService);
 
-    FeedService.$inject = ["$http", "$window"];
+    FeedService.$inject = ["$http"];
 
-    function FeedService($http, $window) {
+    function FeedService($http) {
 
         var service = {
             getMessagesContent: getMessagesContent,
@@ -20,10 +20,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error while retrieving messages!");
                 });
         };
 
@@ -33,10 +31,8 @@
                 .then(function(response) {
                     return response.data;
                 })
-                .catch(function(error) {
-                    if (error.status === 401) {
-                        $window.location.href = "/Account/Login?returnurl=/";
-                    }
+                .catch(function() {
+                    console.log("Error while retrieving current user!");
                 });
         };
 

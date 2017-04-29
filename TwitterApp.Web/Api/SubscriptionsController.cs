@@ -21,6 +21,7 @@ namespace TwitterApp.Web.Api
         readonly int _fakeUserId = Settings.Default.FakeUser;
 
         // GET: api/Subscriptions
+        [System.Web.Http.HttpGet]
         public IQueryable<Subscription> GetSubscriptions()
         {
             return db.Subscriptions;
@@ -28,6 +29,7 @@ namespace TwitterApp.Web.Api
 
         // GET: api/Subscriptions/5
         [ResponseType(typeof(Subscription))]
+        [System.Web.Http.HttpGet]
         public async Task<IHttpActionResult> GetSubscription(int id)
         {
             Subscription subscription = await db.Subscriptions.FindAsync(id);
