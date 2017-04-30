@@ -1,7 +1,4 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -14,70 +11,16 @@ namespace TwitterApp.Web.Api
 {
     [RequireHttps]
     [System.Web.Http.Authorize]
+    [System.Web.Http.RoutePrefix("api/subscriptions")]
     public class SubscriptionsController : ApiController
     {
         private TwitterContext db = new TwitterContext();
 
-        readonly int _fakeUserId = Settings.Default.FakeUser;
-
-        // GET: api/Subscriptions
-        [System.Web.Http.HttpGet]
-        public IQueryable<Subscription> GetSubscriptions()
-        {
-            return db.Subscriptions;
-        }
-
-        // GET: api/Subscriptions/5
-        [ResponseType(typeof(Subscription))]
-        [System.Web.Http.HttpGet]
-        public async Task<IHttpActionResult> GetSubscription(int id)
-        {
-            Subscription subscription = await db.Subscriptions.FindAsync(id);
-            if (subscription == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(subscription);
-        }
-
-        // PUT: api/Subscriptions/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutSubscription(int id, Subscription subscription)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != subscription.SubscriptionId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(subscription).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SubscriptionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        private readonly int _fakeUserId = Settings.Default.FakeUser;
 
         // POST: api/Subscriptions
         [ResponseType(typeof(Subscription))]
+        [System.Web.Http.HttpPost]
         public async Task<IHttpActionResult> PostSubscription(Subscription subscription)
         {
             if (!ModelState.IsValid)
@@ -123,11 +66,6 @@ namespace TwitterApp.Web.Api
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool SubscriptionExists(int id)
-        {
-            return db.Subscriptions.Count(e => e.SubscriptionId == id) > 0;
         }
     }
 }
