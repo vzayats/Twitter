@@ -11,15 +11,14 @@
 
         vm.getUsers = getUsers;
         vm.followUser = followUser;
-        vm.showMoreUsers = showMoreUsers;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
 
-        vm.users = {};
+        vm.users = [];
+        vm.data = vm.users.slice(0, 10);
 
         vm.searchText = "";
         vm.usersFilter = "";
-        vm.limitUsers = 20;
 
         $window.document.title = "Twitter - Subscribe";
 
@@ -29,11 +28,11 @@
             getUsers();
         }
 
-        //Load users
+        //Load users (dynamic loading)
         function getUsers() {
             subscribeService.getUsersContent()
                 .then(function(data) {
-                    vm.users = data;
+                    vm.data = data.slice(0, vm.data.length + 3);
                 });
         }
 
@@ -71,18 +70,5 @@
                 getUsers();
             }
         }
-
-        //load more users
-        function showMoreUsers() {
-            vm.limitUsers += 10;
-            getUsers();
-        }
-
-        //load more users when user scrolls down the page (dynamic loading)
-        window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                showMoreUsers();
-            }
-        };
     }
 }());

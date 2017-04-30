@@ -6,35 +6,31 @@
         </h2>
     </div>
 </div>
-<div ng-show="feedCtrl.tweets.length == 0">
+<div ng-show="feedCtrl.data.length == 0">
     <br/>
-    <h2 class="text-muted text-center">Your feed is empty. Try to <a href="" ng-click="feedCtrl.openSubscribe()">subscribe to someone</a>.
+    <h2 class="text-muted text-center">
+        Your feed is empty. Try to <a href="" ng-click="feedCtrl.openSubscribe()">subscribe to someone</a>.
     </h2>
 </div>
-<div class="container" ng-repeat="tweet in feedCtrl.tweets | orderBy: '-DateCreated' | limitTo: feedCtrl.limitTweets">
-    <ul class="timeline">
-        <li>
-            <div class="timeline-badge info">
-                <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-            </div>
-            <div class="timeline-panel cards">
-                <div class="timeline-heading">
-                    <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{tweet.UserId}}</h4>
-                    <p title="Message time">
-                        <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
-                    </p>
+<div infinite-scroll="feedCtrl.getMessages()">
+    <div class="container" ng-repeat="tweet in feedCtrl.data | orderBy: '-DateCreated'">
+        <ul class="timeline">
+            <li>
+                <div class="timeline-badge info">
+                    <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
                 </div>
-                <div class="timeline-body">
-                    <p>{{tweet.Tweet}}</p>
+                <div class="timeline-panel cards">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{tweet.UserId}}</h4>
+                        <p title="Message time">
+                            <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
+                        </p>
+                    </div>
+                    <div class="timeline-body">
+                        <p>{{tweet.Tweet}}</p>
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<div class="row" ng-show="feedCtrl.tweets.length > 20">
-    <div class="col-md-12 col-md-offset-5">
-        <a title="Load more messages" ng-click="feedCtrl.showMoreTweets()" aria-label="Settings">
-            <i class="fa fa-refresh fa-3x fa-spin-hover"></i>
-        </a>
+            </li>
+        </ul>
     </div>
 </div>

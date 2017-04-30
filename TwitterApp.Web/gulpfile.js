@@ -69,7 +69,8 @@ gulp.task("libs",
                 paths.bower + "angular-toastr.tpls.js",
                 paths.bower + "angular-filter.js",
                 paths.bower + "angular-animate.js",
-                paths.bower + "loading-bar.min.js"
+                paths.bower + "loading-bar.min.js",
+                paths.bower + "ng-infinite-scroll.min.js"
             ])
             .pipe(concat("libs.js"))
             .pipe(gulp.dest(paths.scriptBundles));

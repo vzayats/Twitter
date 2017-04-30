@@ -12,12 +12,11 @@
         vm.getMessages = getMessages;
         vm.createTweet = createTweet;
         vm.removeTweet = removeTweet;
-        vm.showMoreTweets = showMoreTweets;
         vm.getCurrentUser = getCurrentUser;
 
-        vm.tweets = {};
+        vm.tweets = [];
         vm.users = {};
-        vm.limitTweets = 20;
+        vm.data = vm.tweets.slice(0, 20);
 
         $window.document.title = "Twitter - Messages";
 
@@ -25,14 +24,13 @@
 
         function activate() {
             getCurrentUser();
-            getMessages();
         }
 
-        //Load messages
+        //Load messages (dynamic loading)
         function getMessages() {
             messagesService.getMessagesContent()
                 .then(function(data) {
-                    vm.tweets = data;
+                    vm.data = data.slice(0, vm.data.length + 3);
                 });
         }
 
@@ -88,18 +86,5 @@
                     vm.users = data;
                 });
         }
-
-        //load more messages
-        function showMoreTweets() {
-            vm.limitTweets += 10;
-            getMessages();
-        }
-
-        //load more messages when user scrolls down the page (dynamic loading)
-        window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                showMoreTweets();
-            }
-        };
     }
 }());

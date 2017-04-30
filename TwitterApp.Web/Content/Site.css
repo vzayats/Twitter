@@ -170,21 +170,6 @@ textarea { max-width: 280px; }
 
 /*End Messages timeline*/
 
-/* Refresh load spinner on hover*/
-
-.fa.fa-refresh:hover {
-    -webkit-animation: infinite-spinning 1s ease-out 0s infinite normal;
-    animation: infinite-spinning 1s ease-out 0s infinite normal;
-}
-
-@keyframes infinite-spinning {
-    from { transform: rotate(0deg); }
-
-    to { transform: rotate(360deg); }
-}
-
-/*End Refresh load spinner on hover*/
-
 /*User profile*/
 
 * { font-family: 'Open Sans', sans-serif; }

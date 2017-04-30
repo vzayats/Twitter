@@ -1,5 +1,5 @@
 ﻿angular.module("myApp",
-        ["ngRoute", "toastr", "angular.filter", "angular-loading-bar", "ngAnimate"])
+        ["ngRoute", "toastr", "angular.filter", "angular-loading-bar", "ngAnimate", "infinite-scroll"])
     .config([
         "$routeProvider",
         function($routeProvider) {

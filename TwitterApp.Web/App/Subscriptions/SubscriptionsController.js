@@ -11,17 +11,16 @@
 
         vm.getUsers = getUsers;
         vm.unfollowUser = unfollowUser;
-        vm.showMoreUsers = showMoreUsers;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
         vm.cancelSearch = openSubscribe;
         vm.openSubscribe = openSubscribe;
 
-        vm.users = {};
+        vm.users = [];
+        vm.data = vm.users.slice(0, 10);
 
         vm.searchText = "";
         vm.usersFilter = "";
-        vm.limitUsers = 20;
 
         $window.document.title = "Twitter - Subscriptions";
 
@@ -31,11 +30,11 @@
             getUsers();
         }
 
-        //Load users
+        //Load users (dynamic loading)
         function getUsers() {
             subscriptionsService.getUsersContent()
                 .then(function(data) {
-                    vm.users = data;
+                    vm.data = data.slice(0, vm.data.length + 3);
                 });
         }
 
@@ -72,22 +71,9 @@
             }
         }
 
-        //load more users
-        function showMoreUsers() {
-            vm.limitUsers += 10;
-            getUsers();
-        }
-
         //Open subscribe page
         function openSubscribe() {
             $location.url("/Subscribe");
-        };
-
-        //load more users when user scrolls down the page (dynamic loading)
-        window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                showMoreUsers();
-            }
         };
     }
 }());

@@ -44,38 +44,33 @@
         </h3>
     </div>
 </div>
-<div ng-show="messagesCtrl.tweets.length == 0">
+<div ng-show="messagesCtrl.data.length == 0">
     <br/>
     <h2 class="text-muted text-center">You have no messages. Compose new message.</h2>
 </div>
-<div class="container" ng-repeat="tweet in messagesCtrl.tweets | orderBy: '-DateCreated' | limitTo: messagesCtrl.limitTweets">
-    <div ng-repeat="user in messagesCtrl.users">
-        <ul class="timeline">
-            <li>
-                <div class="timeline-badge info">
-                    <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
-                </div>
-                <div class="timeline-panel cards">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{user.Name}} {{user.Surname}} @{{user.UserName}}</h4>
-                        <p title="Message time">
-                            <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
-                        </p>
+<div infinite-scroll="messagesCtrl.getMessages()">
+    <div class="container" ng-repeat="tweet in messagesCtrl.data | orderBy: '-DateCreated'">
+        <div ng-repeat="user in messagesCtrl.users">
+            <ul class="timeline">
+                <li>
+                    <div class="timeline-badge info">
+                        <i class="fa fa-twitter fa-lg" aria-hidden="true"></i>
                     </div>
-                    <div class="timeline-body">
-                        <p>{{tweet.Tweet}}</p>
-                        <hr style="margin-top: 5px; margin-bottom: 7px;">
-                        <button type="button" class="btn btn-danger" title="Delete message" ng-click="messagesCtrl.removeTweet(tweet.Id);"><i class="fa fa-trash-o fa-lg"></i> Delete</button>
+                    <div class="timeline-panel cards">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{user.Name}} {{user.Surname}} @{{user.UserName}}</h4>
+                            <p title="Message time">
+                                <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <p>{{tweet.Tweet}}</p>
+                            <hr style="margin-top: 5px; margin-bottom: 7px;">
+                            <button type="button" class="btn btn-danger" title="Delete message" ng-click="messagesCtrl.removeTweet(tweet.Id);"><i class="fa fa-trash-o fa-lg"></i> Delete</button>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="row" ng-show="messagesCtrl.tweets.length > 20">
-    <div class="col-md-12 col-md-offset-5">
-        <a title="Load more messages" ng-click="messagesCtrl.showMoreTweets()" aria-label="Settings">
-            <i class="fa fa-refresh fa-3x fa-spin-hover"></i>
-        </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
