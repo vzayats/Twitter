@@ -1,8 +1,21 @@
 ﻿angular.module("myApp",
         ["ui.router", "toastr", "angular.filter", "angular-loading-bar", "ngAnimate", "infinite-scroll"])
+    .service("authInterceptor",
+        function($q) {
+            var service = this;
+
+            service.responseError = function(response) {
+                if (response.status === 401) {
+                    window.location = "/Account/Login";
+                }
+                return $q.reject(response);
+            };
+        })
     .config([
-        "$stateProvider", "$urlRouterProvider",
-        function($stateProvider, $urlRouterProvider) {
+        "$stateProvider", "$urlRouterProvider", "$httpProvider",
+        function($stateProvider, $urlRouterProvider, $httpProvider) {
+
+            $httpProvider.interceptors.push("authInterceptor");
 
             $stateProvider
                 .state("Messages", // Messages Page
@@ -42,6 +55,6 @@
                     });
 
             //This is when any route not matched
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise("/");
         }
     ]);
