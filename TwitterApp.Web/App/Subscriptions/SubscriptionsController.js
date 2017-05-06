@@ -4,17 +4,15 @@
     angular.module("myApp")
         .controller("SubscriptionsController", SubscriptionsController);
 
-    SubscriptionsController.$inject = ["SubscriptionsService", "$scope", "$http", "toastr", "$window", "$location"];
+    SubscriptionsController.$inject = ["SubscriptionsService", "$scope", "$http", "toastr", "$window"];
 
-    function SubscriptionsController(subscriptionsService, $scope, $http, toastr, $window, $location) {
+    function SubscriptionsController(subscriptionsService, $scope, $http, toastr, $window) {
         var vm = this;
 
         vm.getUsers = getUsers;
         vm.unfollowUser = unfollowUser;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
-        vm.cancelSearch = openSubscribe;
-        vm.openSubscribe = openSubscribe;
 
         vm.users = [];
         vm.data = vm.users.slice(0, 10);
@@ -70,10 +68,5 @@
                 getUsers();
             }
         }
-
-        //Open subscribe page
-        function openSubscribe() {
-            $location.url("/Subscribe");
-        };
     }
 }());

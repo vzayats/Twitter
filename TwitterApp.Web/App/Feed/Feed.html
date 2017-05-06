@@ -2,14 +2,16 @@
 <div class="row" style="text-align: center">
     <div ng-repeat="user in feedCtrl.users">
         <h2>
-            Your feed, <a href="" ng-click="feedCtrl.userPage()">@{{user.UserName}}</a>:
+            Your feed, <a ui-sref="Messages">
+                <span ng-bind="user.UserName"></span>
+            </a>:
         </h2>
     </div>
 </div>
 <div ng-show="feedCtrl.data.length == 0">
     <br/>
     <h2 class="text-muted text-center">
-        Your feed is empty. Try to <a href="" ng-click="feedCtrl.openSubscribe()">subscribe to someone</a>.
+        Your feed is empty. Try to <a ui-sref="Subscribe">subscribe to someone</a>.
     </h2>
 </div>
 <div infinite-scroll="feedCtrl.getMessages()">
@@ -21,13 +23,19 @@
                 </div>
                 <div class="timeline-panel cards">
                     <div class="timeline-heading">
-                        <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{tweet.UserId}}</h4>
+                        <h4 class="timeline-title" title="User">
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i> <span ng-bind="tweet.UserId"></span>
+                        </h4>
                         <p title="Message time">
-                            <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
+                            <small class="text-muted">
+                                <i class="glyphicon glyphicon-time"></i> <span ng-bind="tweet.DateCreated | date:'dd-MM-yyyy HH:mm'"></span>
+                            </small>
                         </p>
                     </div>
                     <div class="timeline-body">
-                        <p>{{tweet.Tweet}}</p>
+                        <p>
+                            <span ng-bind="tweet.Tweet"></span>
+                        </p>
                     </div>
                 </div>
             </li>

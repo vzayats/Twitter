@@ -5,16 +5,20 @@
                 <div class="col-md-8  col-xs-12" style="margin-left: 10%">
                     <img src="/Content/Icons/user.jpg" class="img-thumbnail picture hidden-xs" title="{{user.Name}} {{user.Surname}}"/>
                     <div class="header">
-                        <h1>{{user.Name}} {{user.Surname}}</h1>
-                        <h4>@{{user.UserName}}</h4>
-                        <span>
-                                {{user.Description}}
-                            </span>
-                        <h5 title="Location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{user.City}}</h5>
-                        <h5 title="Web site">
-                            <i class="fa fa-link" aria-hidden="true" title="Web Site"></i><a target="_blank" href="http://{{user.WebSite}}"> {{user.WebSite}}</a>
+                        <h1>
+                            <span ng-bind="user.Name"></span> <span ng-bind="user.Surname"></span>
+                        </h1>
+                        <h4>@<span ng-bind="user.UserName"></span></h4>
+                        <span ng-bind="user.Description"></span>
+                        <h5 title="Location">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> <span ng-bind="user.City"></span>
                         </h5>
-                        <h5 title="{{user.CreatedAt | date:'dd-MM-yyyy HH:mm'}}"><i class="fa fa-calendar-o" aria-hidden="true"></i> Joined: {{user.CreatedAt | date:'dd-MM-yyyy'}}</h5>
+                        <h5 title="Web site">
+                            <i class="fa fa-link" aria-hidden="true" title="Web Site"></i><a target="_blank" href="http://{{user.WebSite}}">
+                                <span ng-bind="user.WebSite"></span>
+                            </a>
+                        </h5>
+                        <h5 title="{{user.CreatedAt | date:'dd-MM-yyyy HH:mm'}}"><i class="fa fa-calendar-o" aria-hidden="true"></i> Joined: <span ng-bind="user.CreatedAt | date:'dd-MM-yyyy'"></span></h5>
                     </div>
                 </div>
             </div>
@@ -40,7 +44,7 @@
 <div class="row" style="text-align: center">
     <div ng-repeat="user in messagesCtrl.users">
         <h3>
-            Your messages, @{{user.UserName}}:
+            Your messages, @<span ng-bind="user.UserName"></span>:
         </h3>
     </div>
 </div>
@@ -58,13 +62,17 @@
                     </div>
                     <div class="timeline-panel cards">
                         <div class="timeline-heading">
-                            <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> {{user.Name}} {{user.Surname}} @{{user.UserName}}</h4>
+                            <h4 class="timeline-title" title="User"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <span ng-bind="user.Name"></span> <span ng-bind="user.Surname"></span> @<span ng-bind="user.UserName"></span></h4>
                             <p title="Message time">
-                                <small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{tweet.DateCreated | date:'dd-MM-yyyy HH:mm' }}</small>
+                                <small class="text-muted">
+                                    <i class="glyphicon glyphicon-time"></i> <span ng-bind="tweet.DateCreated | date:'dd-MM-yyyy HH:mm'"></span>
+                                </small>
                             </p>
                         </div>
                         <div class="timeline-body">
-                            <p>{{tweet.Tweet}}</p>
+                            <p>
+                                <span ng-bind="tweet.Tweet"></span>
+                            </p>
                             <hr style="margin-top: 5px; margin-bottom: 7px;">
                             <button type="button" class="btn btn-danger" title="Delete message" ng-click="messagesCtrl.removeTweet(tweet.Id);"><i class="fa fa-trash-o fa-lg"></i> Delete</button>
                         </div>

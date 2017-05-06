@@ -59,7 +59,6 @@ gulp.task("libs",
     function() {
         gulp.src([
                 paths.bower + "angular.js",
-                paths.bower + "angular-route.js",
                 paths.bower + "ui-bootstrap.js",
                 paths.bower + "ui-bootstrap-tpls.js",
                 paths.bower + "dist/jquery.js",
@@ -70,7 +69,8 @@ gulp.task("libs",
                 paths.bower + "angular-filter.js",
                 paths.bower + "angular-animate.js",
                 paths.bower + "loading-bar.min.js",
-                paths.bower + "ng-infinite-scroll.min.js"
+                paths.bower + "ng-infinite-scroll.min.js",
+                paths.bower + "angular-ui-router.min.js"
             ])
             .pipe(concat("libs.js"))
             .pipe(gulp.dest(paths.scriptBundles));

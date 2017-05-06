@@ -19,7 +19,7 @@
 <div ng-show="subscriptionsCtrl.data.length == 0">
     <br/>
     <h2 class="text-muted text-center">
-        Your subscriptions is empty. Try to <a href="" ng-click="subscriptionsCtrl.openSubscribe()">subscribe to someone</a>.
+        Your subscriptions is empty. Try to <a ui-sref="Subscribe">subscribe to someone</a>.
     </h2>
 </div>
 <div infinite-scroll="subscriptionsCtrl.getUsers()">
@@ -31,16 +31,20 @@
             <div class="col-md-8  col-xs-12">
                 <img src="/Content/Icons/user.jpg" class="img-thumbnail picture hidden-xs" title="{{user.Name}} {{user.Surname}}"/>
                 <div class="header">
-                    <h1>{{user.Name}} {{user.Surname}}</h1>
-                    <h4>@{{user.UserName}}</h4>
-                    <span>
-                        {{user.Description}}
-                    </span>
-                    <h5 title="Location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{user.City}}</h5>
-                    <h5 title="Web site">
-                        <i class="fa fa-link" aria-hidden="true" title="Web Site"></i><a target="_blank" href="http://{{user.WebSite}}"> {{user.WebSite}}</a>
+                    <h1>
+                        <span ng-bind="user.Name"></span> <span ng-bind="user.Surname"></span>
+                    </h1>
+                    <h4>@<span ng-bind="user.UserName"></span></h4>
+                    <span ng-bind="user.Description"></span>
+                    <h5 title="Location">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i> <span ng-bind="user.City"></span>
                     </h5>
-                    <h5 title="{{user.CreatedAt | date:'dd-MM-yyyy HH:mm'}}"><i class="fa fa-calendar-o" aria-hidden="true"></i> Joined: {{user.CreatedAt | date:'dd-MM-yyyy'}}</h5>
+                    <h5 title="Web site">
+                        <i class="fa fa-link" aria-hidden="true" title="Web Site"></i><a target="_blank" href="http://{{user.WebSite}}">
+                            <span ng-bind="user.WebSite"></span>
+                        </a>
+                    </h5>
+                    <h5 title="{{user.CreatedAt | date:'dd-MM-yyyy HH:mm'}}"><i class="fa fa-calendar-o" aria-hidden="true"></i> Joined: <span ng-bind="user.CreatedAt | date:'dd-MM-yyyy'"></span></h5>
                 </div>
             </div>
         </div>

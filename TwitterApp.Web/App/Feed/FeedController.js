@@ -4,15 +4,13 @@
     angular.module("myApp")
         .controller("FeedController", FeedController);
 
-    FeedController.$inject = ["FeedService", "$scope", "$http", "$window", "$location"];
+    FeedController.$inject = ["FeedService", "$scope", "$http", "$window"];
 
-    function FeedController(feedService, $scope, $http, $window, $location) {
+    function FeedController(feedService, $scope, $http, $window) {
         var vm = this;
 
         vm.getMessages = getMessages;
         vm.getUsers = getUsers;
-        vm.userPage = userPage;
-        vm.openSubscribe = openSubscribe;
 
         vm.tweets = [];
         vm.users = {};
@@ -42,15 +40,5 @@
                     vm.users = data;
                 });
         }
-
-        //Open user page
-        function userPage() {
-            $location.url("/");
-        };
-
-        //Open subscribe page
-        function openSubscribe() {
-            $location.url("/Subscribe");
-        };
     }
 }());

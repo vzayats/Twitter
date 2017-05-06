@@ -4,17 +4,10 @@
     angular.module("myApp")
         .controller("ErrorController", ErrorController);
 
-    ErrorController.$inject = ["$scope", "$window", "$location"];
+    ErrorController.$inject = ["$scope", "$window"];
 
-    function ErrorController($scope, $window, $location) {
-        var vm = this;
-
-        vm.openHomePage = openHomePage;
+    function ErrorController($scope, $window) {
 
         $window.document.title = "Twitter - 404 Error";
-
-        function openHomePage() {
-            $location.url("/");
-        };
     }
 }());

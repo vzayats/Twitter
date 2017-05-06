@@ -1,38 +1,47 @@
 ﻿angular.module("myApp",
-        ["ngRoute", "toastr", "angular.filter", "angular-loading-bar", "ngAnimate", "infinite-scroll"])
+        ["ui.router", "toastr", "angular.filter", "angular-loading-bar", "ngAnimate", "infinite-scroll"])
     .config([
-        "$routeProvider",
-        function($routeProvider) {
+        "$stateProvider", "$urlRouterProvider",
+        function($stateProvider, $urlRouterProvider) {
 
-            $routeProvider
-                .when("/", // Home Page
-                {
-                    templateUrl: "/App/Messages/Messages.html",
-                    controller: "MessagesController",
-                    controllerAs: "messagesCtrl"
-                })
-                .when("/Feed", // Feed Page
-                {
-                    templateUrl: "/App/Feed/Feed.html",
-                    controller: "FeedController",
-                    controllerAs: "feedCtrl"
-                })
-                .when("/Subscribe", // Subscribe Page
-                {
-                    templateUrl: "/App/Subscribe/Subscribe.html",
-                    controller: "SubscribeController",
-                    controllerAs: "subscribeCtrl"
-                })
-                .when("/Subscriptions", // Subscriptions Page
-                {
-                    templateUrl: "/App/Subscriptions/Subscriptions.html",
-                    controller: "SubscriptionsController",
-                    controllerAs: "subscriptionsCtrl"
-                })
-                .otherwise({ // This is when any route not matched - error
-                    templateUrl: "/App/Error/Error.html",
-                    controller: "ErrorController",
-                    controllerAs: "errorCtrl"
-                });
+            $stateProvider
+                .state("Messages", // Messages Page
+                    {
+                        url: "/",
+                        templateUrl: "/App/Messages/Messages.html",
+                        controller: "MessagesController",
+                        controllerAs: "messagesCtrl"
+                    })
+                .state("Feed", // Feed Page
+                    {
+                        url: "/Feed",
+                        templateUrl: "/App/Feed/Feed.html",
+                        controller: "FeedController",
+                        controllerAs: "feedCtrl"
+                    })
+                .state("Subscribe", // Subscribe Page
+                    {
+                        url: "/Subscribe",
+                        templateUrl: "/App/Subscribe/Subscribe.html",
+                        controller: "SubscribeController",
+                        controllerAs: "subscribeCtrl"
+                    })
+                .state("Subscriptions", // Subscriptions Page
+                    {
+                        url: "/Subscriptions",
+                        templateUrl: "/App/Subscriptions/Subscriptions.html",
+                        controller: "SubscriptionsController",
+                        controllerAs: "subscriptionsCtrl"
+                    })
+                .state("Error", //Error page
+                    {
+                        url: "/Error",
+                        templateUrl: "/App/Error/Error.html",
+                        controller: "ErrorController",
+                        controllerAs: "errorCtrl"
+                    });
+
+            //This is when any route not matched
+            $urlRouterProvider.otherwise('/');
         }
     ]);
