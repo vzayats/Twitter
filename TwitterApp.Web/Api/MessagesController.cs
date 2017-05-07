@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
-using TwitterApp.DAL.Context;
 using TwitterApp.DAL.Entities;
-using TwitterApp.Web.Properties;
+using TwitterApp.DAL.Repository.Interfaces;
 
 namespace TwitterApp.Web.Api
 {
@@ -16,26 +12,39 @@ namespace TwitterApp.Web.Api
     [System.Web.Http.RoutePrefix("api/messages")]
     public class MessagesController : ApiController
     {
-        private TwitterContext db = new TwitterContext();
+        private readonly IMessageRepository _repository;
 
-        private readonly int _fakeUserId = Settings.Default.FakeUser;
-
-        // GET: api/Messages
-        [System.Web.Http.HttpGet]
-        public IQueryable<Message> GetMessages()
+        public MessagesController(IMessageRepository repository)
         {
-            return db.Messages.Where(c => c.UserId == _fakeUserId);
+            _repository = repository;
         }
 
         // GET: api/Messages
         [System.Web.Http.HttpGet]
-        public IEnumerable<Message> GetFollowMessages()
+        public IHttpActionResult GetMessages()
         {
-            return db.Messages.Distinct().Join(
-                db.Subscriptions,
-                p => p.UserId,
-                c => c.SubscribeUserId,
-                (p, c) => p).Where(c => c.UserId != _fakeUserId).Distinct();
+            var result = _repository.GetMessages();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        // GET: api/Messages
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetFollowMessages()
+        {
+            var result = _repository.GetFollowMessages();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
 
         // POST: api/Messages
@@ -48,43 +57,18 @@ namespace TwitterApp.Web.Api
                 return BadRequest(ModelState);
             }
 
-            Message mes = new Message
-            {
-                UserId = _fakeUserId,
-                Tweet = message.Tweet,
-                DateCreated = DateTime.Now
-            };
-            db.Messages.Add(mes);
-
-            await db.SaveChangesAsync();
+            await _repository.PostMessage(message);
 
             return CreatedAtRoute("DefaultApi", new {id = message.Id}, message);
         }
 
         // DELETE: api/Messages/5
-        [ResponseType(typeof(Message))]
         [System.Web.Http.HttpDelete]
         public async Task<IHttpActionResult> DeleteMessage(int id)
         {
-            Message message = await db.Messages.FindAsync(id);
-            if (message == null)
-            {
-                return NotFound();
-            }
+            await _repository.DeleteMessage(id);
 
-            db.Messages.Remove(message);
-            await db.SaveChangesAsync();
-
-            return Ok(message);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return Ok();
         }
     }
 }

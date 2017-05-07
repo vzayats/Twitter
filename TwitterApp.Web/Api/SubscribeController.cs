@@ -1,9 +1,6 @@
-﻿using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Mvc;
-using TwitterApp.DAL.Context;
-using TwitterApp.DAL.Entities;
-using TwitterApp.Web.Properties;
+using TwitterApp.DAL.Repository.Interfaces;
 
 namespace TwitterApp.Web.Api
 {
@@ -12,42 +9,53 @@ namespace TwitterApp.Web.Api
     [System.Web.Http.RoutePrefix("api/subscribe")]
     public class SubscribeController : ApiController
     {
-        private TwitterContext db = new TwitterContext();
+        private readonly ISubscribeRepository _repository;
 
-        private readonly int _fakeUserId = Settings.Default.FakeUser;
-
-        // GET: api/Subscribe
-        [System.Web.Http.HttpGet]
-        public IQueryable<User> GetUsers()
+        public SubscribeController(ISubscribeRepository repository)
         {
-            return db.Users.Where(c => c.UserId != _fakeUserId);
+            _repository = repository;
         }
 
         // GET: api/Subscribe
         [System.Web.Http.HttpGet]
-        public IQueryable<User> GetSubscribeUsers()
+        public IHttpActionResult GetUsers()
         {
-            return db.Users.Where(c => c.UserId == _fakeUserId);
-        }
+            var result = _repository.GetUsers();
 
-        // GET: api/Subscribe
-        [System.Web.Http.HttpGet]
-        public IQueryable<User> GetSubscribtionsUsers()
-        {
-            return db.Users.Join(
-                db.Subscriptions,
-                p => p.UserId,
-                c => c.SubscribeUserId,
-                (p, c) => p).Where(c => c.UserId != _fakeUserId).Distinct();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result == null)
             {
-                db.Dispose();
+                return NotFound();
             }
-            base.Dispose(disposing);
+
+            return Ok(result);
+        }
+
+        // GET: api/Subscribe
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetSubscribeUsers()
+        {
+            var result = _repository.GetSubscribeUsers();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        // GET: api/Subscribe
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetSubscribtionsUsers()
+        {
+            var result = _repository.GetSubscribtionsUsers();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
     }
 }
